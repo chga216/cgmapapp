@@ -1,0 +1,42 @@
+{% extends "cgmapapp/base.html" %}
+{% load tethys_gizmos %}
+
+{% block header_buttons %}
+  <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
+    <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
+  </div>
+{% endblock %}
+
+{% block app_content %}
+<!--This page provides details behind our team's app proposal -->
+<h4>Bike Route Planner Proposal</h4>
+<p>Bicycling is considered both an exercise and a mode of transportation. Finding a comfortably sized and safe bike lane, on the other hand, can be quite problematic for daily bike riders.</p>
+<p>Each year in Utah, an average of 372 bicyclists are injured in crashes with motor vehicles and five are killed. The year 2012 had the highest bicyclist crash rate in the last 10 years at 3.2 per 10,000 population. Nearly half (47.3% of known) of the bicyclists in crashes were under 25 years of age. Children ages 0 to 14 made up approximately 18% of all bicyclists in crashes. (For more information regarding Utah's bike safety statistics, visit: <a href="http://www.health.utah.gov/vipp/kids/bicycle-safety/" target="_blank">http://www.health.utah.gov/vipp/kids/bicycle-safety/</a>.</p>
+<p>This app aims to help locate bicycle lanes in desirable locations, based on desired proximity to schools, scenic trails and parks, Frontrunner stations, and shopping centers, while avoiding locations with high speed profiles.</p>
+<p>Eventually, users will have autonomy to select their desired values for each of the aforementioned variables.</p>
+
+{% endblock %}
+
+{# Use the after_app_content block for modals #}
+{% block after_app_content %}
+  <!-- Example Modal -->
+  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5 class="modal-title" id="help-modal-label">Example Modal</h5>
+        </div>
+        <div class="modal-body">
+          <p>You can add custom buttons to the app header using the <code>header_buttons</code> block. Use anchor/link tags for the button and wrap it in a div with the class <code>header-button</code>. For buttons with the gliphyicons, add the <code>glyphicon-button</code> class as well.</p>
+          <p>Ever have trouble using a modal in a Tethys app? Use the <code>after_app_content</code> block for modal content to allow them to function properly. See: <a href="https://getbootstrap.com/javascript/#modals">Bootstrap Modals</a></p>
+          <p>Add tooltips to any element by adding the <code>data-toggle</code>, <code>data-placement</code>, and <code>title</code> attributes to the button. See: <a href="https://getbootstrap.com/javascript/#tooltips">Bootstrap Tooltips</a></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

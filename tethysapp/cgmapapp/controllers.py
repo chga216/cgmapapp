@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from tethys_sdk.gizmos import Button
+from tethys_sdk.gizmos import ToggleSwitch
+from tethys_sdk.gizmos import RangeSlider
 
 @login_required()
 def home(request):
@@ -91,23 +93,63 @@ def dataservices(request):
 
 
 def mapview(request):
-    context = {
 
+    utah_roads = ToggleSwitch(display_text='Utah Roads:',
+                              name='utah_roads',
+                              on_label='Yes',
+                              off_label='No',
+                              on_style='success',
+                              off_style='danger',
+                              initial=True,
+                              attributes={'onchange':'toggle_roads();'})
+
+    utah_dem = ToggleSwitch(display_text='Utah DEM:',
+                            name='utah_dem',
+                            on_label='Yes',
+                            off_label='No',
+                            on_style='success',
+                            off_style='danger',
+                            initial=True,
+                            attributes={'onchange':'toggle_dem()'})
+
+    context = {
+        'utah_roads': utah_roads,
+        'utah_dem': utah_dem,
     }
 
     return render(request, 'cgmapapp/mapview.html', context)
 
 def proposal(request):
-    context = {
 
+    brc_button = Button(
+        display_text='Bike Report Card',
+        name='brc-button',
+        style='info',
+        attributes={
+            'onclick': 'brc();'
+    }
+    )
+
+    context = {
+        'brc_button': brc_button,
     }
 
     return render(request, 'cgmapapp/proposal.html', context)
 
 
 def mockup(request):
-    context = {
+    slider_grade = RangeSlider(display_text='Desired Average Grade (ft/ft)',
+                          name='slider_grade',
+                          min=0.0001,
+                          max=2,
+                          initial=0.1,
+                          step=0.0001,
+                          attributes={
+                              'onchange': 'get_grade_value();'
+                          })
 
+    context = {
+        'slider_grade': slider_grade,
     }
 
     return render(request, 'cgmapapp/mockup.html', context)

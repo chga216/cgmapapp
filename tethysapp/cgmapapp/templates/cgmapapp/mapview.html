@@ -9,10 +9,8 @@
 
 {% block app_content %}
 <!--This page contains the map viewing program of Mapplication -->
-<h5>This webpage allows users to obtain speed limit information for certain roads in Utah and toggle on/off layers</h5>
+<h6>This webpage allows users to obtain speed limit information for certain roads in Utah and toggle on/off layers. To obtain speed limit information, simply click on the desired green-road segment. To toggle layers on and off, click the "Utah Roads" and "Utah DEM" toggle buttons located on the left-side of the screen.</h6>
 
-<!DOCTYPE html>
-<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -43,88 +41,34 @@
   <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
   <script src="https://js.arcgis.com/4.6/"></script>
 
-    <script>
-    	  var featureLayer;
-    	  var mapLayer
-
-		  function turnLayerOn () {
-		featureLayer.visible = !featureLayer.visible;
-
-		}
-		  function turnDEMLayerOn () {
-		mapLayer.visible = !mapLayer.visible;
-
-		}
-
-
-	require([
-      "esri/Map",
-      "esri/layers/FeatureLayer",
-	  "esri/layers/MapImageLayer",
-      "esri/views/MapView",
-      "dojo/domReady!"
-    ], function(
-      Map,
-      FeatureLayer,
-	  MapImageLayer,
-      MapView
-    ) {
-
-      // Create the map
-      var map = new Map({
-        basemap: "streets"
-      });
-
-      // Create the MapView
-      var view = new MapView({
-        container: "viewDiv",
-        map: map,
-        center: [-111.1, 39.1],
-        zoom: 6
-      });
-
-      var template = { // autocasts as new PopupTemplate()
-        title: "Speed Limit on Road: {route}",
-        content: "As of 2016, the speed limit on {route} was {speedlimit} mph.",
-        fieldInfos: [{
-          fieldName: "speedlimit",
-
-		// In the future, I want to (maybe) add a part where it shows the average daily traffic flow on the road segment
-
-		}]
-      };
-
-      // Reference the popupTemplate instance in the
-      // popupTemplate property of FeatureLayer
-     featureLayer = new FeatureLayer({
-        url: "http://geoserver2.byu.edu/arcgis/rest/services/StorminMormons/Utah_2016_Speed_Limits/FeatureServer/0",
-        outFields: ["*"],
-        popupTemplate: template
-      });
-    mapLayer = new MapImageLayer({
-        url: "http://geoserver2.byu.edu/arcgis/rest/services/StorminMormons/DEM/MapServer"
-     });
-
-	  map.layers.add(mapLayer);
-      map.add(featureLayer);
-
-	  featureLayer.visible=true;
-      mapLayer.visible=true;
-
-    });
-  </script>
 </head>
 
 <body>
-  <hr>
+  <!-- <hr>
   <input type="button" value="Utah Roads" onclick="turnLayerOn()"/>
   <input type="button" value="Utah DEM" onclick="turnDEMLayerOn()"/>
+  <hr> -->
   <hr>
-
   <div id="viewDiv"></div>
 </body>
 
-</html>
+{% endblock %}
+
+{% block app_navigation_items %}
+  <!-- This is where my buttons are located -->
+  <br>
+  <li><a href="/apps/cgmapapp">Home</a></li>
+  <li><a href="/apps/cgmapapp/proposal">Proposal</a></li>
+  <li><a href="/apps/cgmapapp/mockup">Mockup</a></li>
+  <li><a href="/apps/cgmapapp/mapview">Map View</a></li>
+  <li><a href="/apps/cgmapapp/dataservices">Data Services</a></li>
+  <li><a href="/apps/cgmapapp/about">About</a></li>
+  <br>
+  <hr>
+
+  {% gizmo utah_roads %}
+  {% gizmo utah_dem %}
+
 {% endblock %}
 
 {# Use the after_app_content block for modals #}
